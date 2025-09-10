@@ -1,18 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import RestaurantCard from './RestaurantCard'
+import resList from '../utils/mockData'
 
 const Body = () => {
+  const [resData, setResData] = useState(resList);
+    
   return (
     <div className='body'>
-        <div className='search'>Search</div>
+        <div className='filter'>
+          <button 
+            className='filter-btn m-10 cursor-pointer border-2' 
+            onClick={() => setResData(resData.filter((res) => res.info.avgRating >= 4))} 
+          >
+            Top Rated Restaurants
+          </button>
+        </div>
         <div className='res-container'>
-            <RestaurantCard
-                image="https://www.poojn.in/wp-content/uploads/2025/04/The-Business-of-Indian-Cuisine-Restaurants-Catering-Explained.jpeg.jpg"
-                name="Great Indian Restaurant"
-                cuisine="Indian Thali"
-                rating="4.5"
-                deliveryTime="30"
-            />
+            {resData.map((restaurant) =>
+            <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+            )}
 
         </div>
     </div>
